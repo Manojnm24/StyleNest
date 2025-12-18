@@ -140,3 +140,20 @@ app.post('/signup', async (req, res) => {
   success = true;
   res.json({ success, token })
 })
+
+// endpoint for getting all products data
+app.get("/allproducts", async (req, res) => {
+  let products = await Product.find({});
+  console.log("All Products");
+  res.send(products);
+});
+
+
+// endpoint for getting latest products data
+app.get("/newcollections", async (req, res) => {
+  let products = await Product.find({});
+  let arr = products.slice(0).slice(-8);
+  console.log("New Collections");
+  res.send(arr);
+});
+
