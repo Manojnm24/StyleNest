@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-require("dotenv").config(); 
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, '../.env') }); 
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-const path = require("path");
 const cors = require("cors");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
