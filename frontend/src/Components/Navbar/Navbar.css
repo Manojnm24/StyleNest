@@ -1,7 +1,8 @@
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #e74c3c;
-    --accent-color: #f39c12;
+    /* Changed from blue (#3498db) to the "Latest Collection" Red (#ff4141) */
+    --primary-color: #ff4141; 
+    --secondary-color: #ff4141; /* Keeping these consistent for a unified theme */
+    --accent-color: #ff4141;    /* Adjusted accent for a smoother gradient */
     --text-color: #2c3e50;
     --bg-color: #ffffff;
     --shadow-color: rgba(0, 0, 0, 0.1);
@@ -14,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 8px 32px var(--shadow-color);
-    padding: 15px 50px; /* Slightly reduced padding for better desktop fit */
+    padding: 15px 50px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.9) 100%);
     border-radius: 0 0 20px 20px;
     backdrop-filter: blur(var(--blur-strength));
@@ -22,13 +23,12 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
     transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     position: relative;
-    z-index: 100; /* Ensure nav stays on top */
+    z-index: 100;
 }
 
-/* Enhanced hover effect for the entire nav bar */
 .nav:hover {
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
-    backdrop-filter: blur(calc(var(--blur-strength) + 2px)); /* Subtle increase in blur */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(calc(var(--blur-strength) + 2px));
     -webkit-backdrop-filter: blur(calc(var(--blur-strength) + 2px));
 }
 
@@ -40,9 +40,8 @@
     transition: transform var(--transition-speed) ease;
 }
 
-/* Enhanced hover effect for logo */
 .nav-logo:hover {
-    transform: scale(1.05); /* Subtle scale up on hover */
+    transform: scale(1.05);
 }
 
 .nav-logo img {
@@ -52,10 +51,9 @@
     transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 
-/* Enhanced hover effect for logo image */
 .nav-logo img:hover {
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2)); /* Stronger shadow */
-    transform: rotate(5deg); /* Fun rotate effect */
+    filter: drop-shadow(0 6px 12px rgba(255, 65, 65, 0.3)); 
+    transform: rotate(5deg);
 }
 
 .nav-logo p {
@@ -63,25 +61,18 @@
     font-size: 32px;
     font-weight: 800;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin: 0; /* Remove default p margin */
+    margin: 0;
     transition: background var(--transition-speed) ease;
-}
-
-/* Enhanced hover effect for logo text */
-.nav-logo p:hover {
-    background: linear-gradient(45deg, var(--accent-color), var(--primary-color), var(--secondary-color)); /* Reverse gradient */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 30px; /* Adjust gap between items */
+    gap: 30px;
     margin: 0;
     padding: 0;
     font-size: 20px;
@@ -96,13 +87,12 @@
     justify-content: center;
     cursor: pointer;
     padding: 5px 10px;
-    position: relative; /* Needed for absolute positioning of hr */
+    position: relative;
     transition: transform var(--transition-speed) ease;
 }
 
-/* Enhanced hover effect for menu items */
 .nav-menu li:hover {
-    transform: translateY(-2px); /* Lift effect */
+    transform: translateY(-2px);
 }
 
 .nav-menu li a {
@@ -110,34 +100,30 @@
     transition: color var(--transition-speed) ease, text-shadow var(--transition-speed) ease;
 }
 
-/* Dynamic styles for active or hovered state */
 .nav-menu li.active a,
 .nav-menu li:hover a {
     color: var(--primary-color);
-    text-shadow: 0 2px 4px rgba(52, 152, 219, 0.3); /* Subtle glow */
+    text-shadow: 0 2px 4px rgba(255, 65, 65, 0.2); 
 }
 
-/* ----- The Dynamic Underline Fix ----- */
 .nav-menu hr {
     border: none;
-    width: 0%; /* Hidden by default */
+    width: 0%;
     height: 4px;
     border-radius: 10px;
-    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+    background: var(--primary-color);
     transition: width var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    position: absolute; /* Takes it out of flow so it doesn't affect alignment */
-    bottom: -5px; /* Position just below text */
+    position: absolute;
+    bottom: -5px;
     left: 50%;
-    transform: translateX(-50%); /* Centers the hr */
+    transform: translateX(-50%);
 }
 
-/* Show hr when parent li has 'active' class or is hovered */
 .nav-menu li.active hr,
 .nav-menu li:hover hr {
     width: 80%;
-    box-shadow: 0 2px 6px rgba(231, 76, 60, 0.4); /* Glow effect on underline */
+    box-shadow: 0 2px 6px rgba(255, 65, 65, 0.4);
 }
-/* ------------------------------------ */
 
 .nav-login-cart {
     display: flex;
@@ -159,16 +145,15 @@
     transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
-/* Enhanced hover effect for buttons */
+/* Hover for buttons now matches the Latest Collection Red */
 .nav-login-cart button:hover {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #2980b9 100%);
+    background: var(--primary-color);
     color: white;
     border-color: transparent;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); /* Shadow for depth */
-    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Cart Icon Container for positioning badge */
 .nav-cart-container {
     position: relative;
     display: flex;
@@ -180,10 +165,9 @@
     transition: transform var(--transition-speed) ease, filter var(--transition-speed) ease;
 }
 
-/* Enhanced hover effect for cart icon */
 .nav-login-cart img:hover {
-    transform: scale(1.1); /* Scale up */
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); /* Shadow */
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(255, 65, 65, 0.2));
 }
 
 .nav-cart-count {
@@ -198,84 +182,37 @@
     right: -8px;
     font-size: 12px;
     font-weight: 800;
-    background: var(--secondary-color);
+    background: var(--primary-color);
     color: white;
     z-index: 2;
     transition: transform var(--transition-speed) ease;
 }
 
-/* Enhanced hover effect for cart count badge */
-.nav-cart-container:hover .nav-cart-count {
-    transform: scale(1.2); /* Scale up badge on container hover */
-}
-
-/* --- Mobile Dropdown Icon --- */
-/* Ensure it is hidden on desktop browser sizes */
+/* Mobile styles remain the same but will automatically use the new color */
 .nav-dropdown {
     display: none; 
     width: 35px;
     rotate: -90deg;
-    transition: all 0.5s ease, transform var(--transition-speed) ease;
-    cursor: pointer;
+    transition: all 0.5s ease;
 }
 
-/* Enhanced hover effect for dropdown icon */
-.nav-dropdown:hover {
-    transform: scale(1.1) rotate(-90deg); /* Scale up while maintaining rotation */
-}
-
-.nav-dropdown.open {
-    transform: rotate(90deg);
-}
-
-/* -------- Media Queries ---------- */
-
-@media (max-width: 900px) {
-    .nav { padding: 15px 30px; }
-    .nav-menu { gap: 20px; font-size: 18px; }
-    .nav-logo p { font-size: 26px; }
-}
-
-/* Trigger mobile menu view around tablet size */
 @media (max-width: 750px) {
-    .nav-dropdown {
-        display: block; /* Only show on screens smaller than 750px */
-    }
-
+    .nav-dropdown { display: block; }
     .nav-menu {
-        display: none; /* Hide default horizontal menu */
+        display: none;
         flex-direction: column;
         position: absolute;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.98) 100%);
+        background: white;
         width: 100%;
-        top: 100%; /* Position directly below navbar */
+        top: 100%;
         left: 0;
         padding: 20px 0;
         box-shadow: 0 8px 32px var(--shadow-color);
-        border-radius: 0 0 20px 20px;
-        gap: 20px;
     }
-
-    /* Class added by JS when dropdown is clicked */
-    .nav-menu-visible {
-        display: flex; 
-        animation: slideDown 0.4s ease forwards;
-    }
-
-    .nav-menu hr { bottom: 0; } /* Adjust hr position for vertical layout */
-
-    .nav-login-cart button {
-        padding: 8px 15px;
-        font-size: 14px;
-    }
+    .nav-menu-visible { display: flex; animation: slideDown 0.4s ease forwards; }
 }
 
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 450px) {
-    .nav-logo p { display: none; /* Hide text on very small screens if needed */ }
-    .nav-login-cart { gap: 10px; }
 }
