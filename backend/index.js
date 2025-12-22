@@ -355,6 +355,20 @@ const chatRoutes = require("./routes/chat");
 app.use("/api", chatRoutes);
 
 
+// Get logged-in user's orders
+app.get("/my-orders", fetchuser, async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user.id })
+      .sort({ createdAt: -1 });
+
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+
 // Starting Express Server
 app.listen(port, (error) => {
   if (!error) console.log("Server Running on port " + port);

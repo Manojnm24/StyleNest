@@ -12,6 +12,7 @@ const Navbar = () => {
   const {getTotalCartItems} = useContext(ShopContext);
 
   const menuRef = useRef();
+  const token = localStorage.getItem("auth-token");
 
   const dropdown_toggle = (e) => {
     menuRef.current.classList.toggle('nav-menu-visible');
@@ -35,6 +36,11 @@ const Navbar = () => {
         {localStorage.getItem('auth-token')
         ?<button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace("/");}}>Logout</button>
         :<Link to='/login' style={{ textDecoration: 'none' }}><button>Login</button></Link>}
+        <li>
+        {token && (<Link to="/orders" style={{ textDecoration: "none" }}>
+        <button>My Orders</button></Link>)}
+        </li>
+
         <Link to="/cart"><img src={cart_icon} alt="cart"/></Link>
         <div className="nav-cart-count">{getTotalCartItems()}</div>
       </div>
