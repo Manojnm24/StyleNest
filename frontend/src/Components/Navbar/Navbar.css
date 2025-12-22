@@ -1,3 +1,4 @@
+/* navbar.css */
 :root {
     /* Changed from blue (#3498db) to the "Latest Collection" Red (#ff4141) */
     --primary-color: #ff4141; 
@@ -6,6 +7,17 @@
     --text-color: #2c3e50;
     --bg-color: #ffffff;
     --shadow-color: rgba(0, 0, 0, 0.1);
+    --blur-strength: 10px;
+    --transition-speed: 0.3s;
+}
+
+[data-theme='dark'] {
+    --primary-color: #ff4141; /* Keeping consistent, or adjust if needed for dark mode */
+    --secondary-color: #ff4141;
+    --accent-color: #ff4141;
+    --text-color: #ffffff;
+    --bg-color: #121212;
+    --shadow-color: rgba(255, 255, 255, 0.1);
     --blur-strength: 10px;
     --transition-speed: 0.3s;
 }
@@ -24,6 +36,12 @@
     transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     position: relative;
     z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    padding: 16px;
+    background: var(--nav-bg); /* Use the variable here */
+    color: var(--text-color);   /* Use the variable here */
+    box-shadow: 0 1px 3px -2px black;
 }
 
 .nav:hover {
@@ -152,6 +170,14 @@
     border-color: transparent;
     box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3);
     transform: translateY(-2px);
+    outline: none;
+    border: 1px solid #7a7a7a;
+    border-radius: 75px;
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 500;
+    background: var(--bg-color);
+    cursor: pointer;
 }
 
 .nav-cart-container {
@@ -215,4 +241,36 @@
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dark mode overrides for navbar-specific elements */
+[data-theme='dark'] .nav-menu li a {
+    color: #cccccc; /* Lighter gray for inactive links in dark mode */
+}
+
+[data-theme='dark'] .nav-login-cart button {
+    border-color: #555555; /* Darker border for buttons in dark mode */
+    background: linear-gradient(135deg, #333333 0%, #555555 100%); /* Darker gradient for buttons */
+}
+
+[data-theme='dark'] .nav-menu {
+    background: var(--nav-bg); /* Ensure menu background uses nav-bg in dark mode */
+}
+
+[data-theme='dark'] .nav-menu-visible {
+    background: var(--nav-bg); /* For mobile dropdown */
+}
+
+/* Added for cart icon visibility in dark mode */
+[data-theme='dark'] .nav-login-cart img {
+    border: 2px solid #ff4141; /* Light border to make the cart icon visible in dark mode */
+    border-radius: 100px; /* Slight rounding for better aesthetics */
+    padding: 2px; /* Optional padding for better border visibility */
+}
+
+/* Added for logo image visibility in dark mode */
+[data-theme='dark'] .nav-logo img {
+    border: 2px solid #ff4141; /* Light border to make the logo image visible in dark mode */
+    border-radius: 50%; /* Maintains the circular shape */
+    padding: 2px; /* Optional padding for better border visibility */
 }
