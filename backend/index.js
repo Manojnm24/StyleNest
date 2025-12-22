@@ -14,6 +14,9 @@ const Order = require("./models/Order");
 app.use(express.json());
 app.use(cors());
 
+const orderRoutes = require("./routes/order");
+app.use("/api/orders", orderRoutes);
+
 // Database Connection With MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))

@@ -4,6 +4,35 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const token = localStorage.getItem("auth-token");
 
+// Function to download invoice PDF
+  const downloadInvoice = async (orderId) => {
+  const res = await fetch(
+    `http://localhost:4000/api/orders/invoice/${orderId}`,
+    {
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    }
+  );
+  if (!res.ok) {
+    alert("Failed to download invoice");
+    return;
+  }
+
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `invoice_${orderId}.pdf`;
+  document.body.appendChild(a);
+  a.click();
+
+  a.remove();
+  window.URL.revokeObjectURL(url);
+};
+
+
   useEffect(() => {
     fetch("http://localhost:4000/my-orders", {
       headers: {
@@ -54,6 +83,10 @@ const Orders = () => {
                 <p>
                   ₹{item.price} × {item.quantity}
                 </p>
+                <button onClick={() => downloadInvoice(order._id)}>
+  Download Invoice
+</button>
+
               </div>
             </div>
           ))}
