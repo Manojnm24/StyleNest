@@ -6,7 +6,7 @@ import cart_icon from '../Assets/cart_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
 import nav_dropdown from '../Assets/nav_dropdown.png';
 
-const Navbar = () => {
+const Navbar = ({ theme, toggleTheme }) => {
   // State to track the active menu item
   let [menu, setMenu] = useState("shop");
   const { getTotalCartItems } = useContext(ShopContext);
@@ -51,6 +51,15 @@ const Navbar = () => {
       </ul>
 
       <div className="nav-login-cart">
+        {/* Dark Mode Toggle Button */}
+        <button 
+          onClick={toggleTheme} 
+          className="theme-toggle-btn" 
+          style={{ cursor: 'pointer', padding: '8px 15px', borderRadius: '20px' }}
+        >
+          {theme === "light" ? "🌙" : "☀️"}
+        </button>
+
         {localStorage.getItem('auth-token')
           ? <button onClick={() => { localStorage.removeItem('auth-token'); window.location.replace("/"); }}>Logout</button>
           : <Link to='/login' style={{ textDecoration: 'none' }}><button>Login</button></Link>}
