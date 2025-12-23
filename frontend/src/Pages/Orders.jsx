@@ -85,6 +85,13 @@ const Orders = () => {
 
   useEffect(() => {
     fetchOrders();
+    
+    // Auto-refresh every 10 seconds to get latest order status
+    const interval = setInterval(() => {
+      fetchOrders();
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (orders.length === 0) {
@@ -93,7 +100,12 @@ const Orders = () => {
 
   return (
     <div className="orders-container">
-      <h2>Your Orders</h2>
+      <div className="orders-header">
+        <h2>Your Orders</h2>
+        <button className="refresh-btn" onClick={fetchOrders}>
+          🔄 Refresh
+        </button>
+      </div>
 
       {orders.map((order) => (
         <div key={order._id} className="order-card">
