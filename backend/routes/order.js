@@ -70,15 +70,15 @@ router.post("/rate/:orderId", fetchUser, async (req, res) => {
 // PATCH update order status (admin only)
 router.patch("/status/:orderId", async (req, res) => {
   try {
-    const { status } = req.body;
+    const { orderStatus } = req.body;
     
-    if (!["Placed", "Shipped", "Delivered"].includes(status)) {
+    if (!["Placed", "Shipped", "Delivered"].includes(orderStatus)) {
       return res.status(400).json({ error: "Invalid status" });
     }
 
     const order = await Order.findByIdAndUpdate(
       req.params.orderId,
-      { orderStatus: status },
+      { orderStatus: orderStatus },
       { new: true }
     );
 
