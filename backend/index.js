@@ -14,6 +14,7 @@ const nodemailer = require("nodemailer");
 const generateInvoiceBuffer = require("./utils/invoiceGenerator");
 const sendInvoiceEmail = require("./utils/sendInvoiceEmail");
 const wishlistRoutes = require("./routes/wishlist");
+const promoRoutes = require("./routes/promo");
 
 app.use(express.json());
 app.use(cors());
@@ -23,6 +24,9 @@ app.use("/api/orders", orderRoutes);
 
 // Wishlist Routes
 app.use("/api/wishlist", wishlistRoutes);
+
+// Promo Routes
+app.use("/api/promo", promoRoutes);
 
 // Database Connection With MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -365,10 +369,13 @@ app.post("/create-order", fetchuser, async (req, res) => {
 
 // Verify Payment and Clear Cart
 app.post("/verify-payment", fetchuser, async (req, res) => {
+  
   const {
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
+    discountCode,
+    discountAmount
   } = req.body;
 
   const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -377,6 +384,10 @@ app.post("/verify-payment", fetchuser, async (req, res) => {
     .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
+
+    if (expectedSignature !== razorpay_signature) {
+      return res.status(400).json({ error: "Payment verification failed" });
+    }
 
   if (expectedSignature === razorpay_signature) {
 
@@ -408,11 +419,23 @@ app.post("/verify-payment", fetchuser, async (req, res) => {
     0
   );
 
+
+  let validDiscount = 0;
+
+  if (discountCode === "CHRISTMAS25") {
+    validDiscount = Math.floor((totalAmount * 25) / 100);
+  }
+
+  const payableAmount = totalAmount - validDiscount;
+
   // 4️⃣ Save order
   const order = new Order({
     userId: req.user.id,
     items,
     totalAmount,
+    discountCode: discountCode || null,
+    discountAmount: validDiscount,
+    finalAmount: payableAmount,
     razorpay_order_id,
     razorpay_payment_id,
     paymentStatus: "Paid",

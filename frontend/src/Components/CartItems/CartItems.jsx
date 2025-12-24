@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./CartItems.css";
 import cross_icon from "../Assets/cart_cross_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
@@ -7,9 +7,47 @@ import { backend_url, currency } from "../../App";
 const CartItems = () => {
   const {products} = useContext(ShopContext);
   const {cartItems,removeFromCart,getTotalCartAmount} = useContext(ShopContext);
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(getTotalCartAmount());
+  const [promoApplied, setPromoApplied] = useState(false);
+
+  // Function to apply promo code
+  const applyPromo = async () => {
+  if (!promoCode) {
+    alert("Enter a promo code");
+    return;
+  }
+
+  const totalAmount = getTotalCartAmount();
+
+  const res = await fetch(`${backend_url}/api/promo/apply`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "auth-token": localStorage.getItem("auth-token"),
+    },
+    body: JSON.stringify({
+      code: promoCode,
+      totalAmount,
+    }),
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("Invalid Promo Code");
+    return;
+  }
+
+  setDiscount(data.discountAmount);
+  setFinalAmount(data.finalAmount);
+  setPromoApplied(true);
+};
+
 
   const handleCheckout = async () => {
-  const amount = getTotalCartAmount();
+  const amount = promoApplied ? finalAmount : getTotalCartAmount();
 
   if (amount === 0) {
     alert("Cart is empty");
@@ -113,10 +151,24 @@ const CartItems = () => {
               <p>Free</p>
             </div>
             <hr />
-            <div className="cartitems-total-item">
-              <h3>Total</h3>
-              <h3>{currency}{getTotalCartAmount()}</h3>
-            </div>
+            {promoApplied && (
+  <>
+    <div className="cartitems-total-item">
+      <p>Discount</p>
+      <p>-{currency}{discount}</p>
+    </div>
+    <hr />
+  </>
+)}
+
+<div className="cartitems-total-item">
+  <h3>Total</h3>
+  <h3>
+    {currency}
+    {promoApplied ? finalAmount : getTotalCartAmount()}
+  </h3>
+</div>
+
           </div>
           <button onClick={handleCheckout}>
   PROCEED TO CHECKOUT
@@ -125,8 +177,9 @@ const CartItems = () => {
         <div className="cartitems-promocode">
           <p>If you have a promo code, Enter it here</p>
           <div className="cartitems-promobox">
-            <input type="text" placeholder="promo code" />
-            <button>Submit</button>
+            <input type="text" placeholder="promo code" value={promoCode} 
+            onChange={(e) => setPromoCode(e.target.value)} />
+            <button onClick={applyPromo}>Apply Promo</button>
           </div>
         </div>
       </div>
