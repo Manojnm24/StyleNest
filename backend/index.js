@@ -18,6 +18,14 @@ const promoRoutes = require("./routes/promo");
 
 app.use(express.json());
 app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001"
+  ],
+  credentials: true
+}));
+
 
 const orderRoutes = require("./routes/order");
 app.use("/api/orders", orderRoutes);
@@ -485,6 +493,7 @@ app.get("/my-orders", fetchuser, async (req, res) => {
 
 
 // Starting Express Server
+const PORT = process.env.PORT || 4000;
 app.listen(port, (error) => {
   if (!error) console.log("Server Running on port " + port);
   else console.log("Error : ", error);
