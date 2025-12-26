@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Analytics.css';
 import { backend_url } from '../../App';
 import {
-  LineChart, Line, BarChart, Bar, PieChart, Pie, AreaChart, Area,
+  BarChart, Bar, PieChart, Pie, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell
 } from 'recharts';
 
